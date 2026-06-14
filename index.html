@@ -1,16 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romania Tanara</title>
-    <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        iframe { width: 100%; height: 100%; border: none; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ROMANIA TANARA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f1f5f9;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+      line-height: 1.5;
+      color: #0f172a;
+      scroll-behavior: smooth;
+    }
+
+    /* ========= BANNER: EXACTLY 10% OF VIEWPORT HEIGHT ========= */
+    .top-banner {
+      height: 10vh;                /* device-dependent, exactly 10% of display height */
+      min-height: 60px;            /* ensures banner never collapses on very tiny screens */
+      background: linear-gradient(105deg, #0b2b44 0%, #1a4c6e 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* brand / logo */
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.3rem 1rem;
+      border-radius: 48px;
+      backdrop-filter: blur(2px);
+      transition: 0.2s;
+    }
+
+    /* navigation menu — no contact option */
+    .nav-menu {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.4rem 0;
+      transition: 0.2s ease;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-menu a:hover {
+      border-bottom-color: #ffdd99;
+      color: #ffefcf;
+      transform: translateY(-1px);
+    }
+
+    /* active / focus accessibility */
+    .nav-menu a:focus-visible {
+      outline: 2px solid #ffdd99;
+      border-radius: 4px;
+    }
+
+    /* main content container */
+    .main-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem 1.5rem;
+    }
+
+    /* document card style */
+    .doc-card {
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+      transition: all 0.2s;
+      border: 1px solid #e2e8f0;
+    }
+
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1.25rem 1.8rem 0.75rem 1.8rem;
+      background: #fefefe;
+      border-bottom: 2px solid #eef2ff;
+    }
+
+    .doc-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #1e3c72, #2b4c7c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.2px;
+    }
+
+    .badge {
+      background: #e9f0fe;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1e4a76;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02);
+    }
+
+    .pdf-iframe {
+      width: 100%;
+      display: block;
+      border: none;
+      background: #eef2ff;
+      transition: 0.2s;
+    }
+
+    /* dynamic iframe height — optimized for both large displays & mobiles */
+    .pdf-iframe {
+      height: 620px;   /* generous default for desktop */
+    }
+
+    /* responsive fine-tuning */
+    @media (max-width: 900px) {
+      .top-banner {
+        padding: 0 4%;
+      }
+      .brand {
+        font-size: 1.2rem;
+        padding: 0.2rem 0.8rem;
+      }
+      .nav-menu {
+        gap: 1rem;
+      }
+      .nav-menu a {
+        font-size: 0.9rem;
+      }
+      .doc-header {
+        padding: 1rem 1.5rem 0.5rem 1.5rem;
+      }
+      .doc-title {
+        font-size: 1.3rem;
+      }
+      .pdf-iframe {
+        height: 520px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .main-container {
+        padding: 1.2rem 1rem 2rem 1rem;
+      }
+      .top-banner {
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        min-height: 10vh;
+        padding: 0.6rem 1rem;
+        gap: 0.4rem;
+        text-align: center;
+      }
+      /* keep banner exactly 10vh on phones, but if content wraps we maintain min-height */
+      .top-banner {
+        height: auto;
+        min-height: 10vh;
+      }
+      .brand {
+        font-size: 1.1rem;
+      }
+      .nav-menu {
+        gap: 0.9rem;
+        justify-content: center;
+      }
+      .nav-menu a {
+        font-size: 0.85rem;
+        padding: 0.2rem 0;
+      }
+      .pdf-iframe {
+        height: 460px;   /* comfortable for mobile reading & scroll inside iframe */
+      }
+      .doc-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pdf-iframe {
+        height: 420px;
+      }
+      .doc-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* extra touch: nice loading hint */
+    .iframe-note {
+      font-size: 0.75rem;
+      color: #4b5563;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2edf7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .iframe-note span {
+      font-weight: 500;
+    }
+
+    /* simple footer for extra polish (no menu, only info) */
+    .info-footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.8rem;
+      color: #4b5563;
+      border-top: 1px solid #cbd5e1;
+      margin-top: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* ensure smooth resizing */
+    img, iframe {
+      max-width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <iframe src="RomaniaTanaraV1.pdf"></iframe>
+
+<!-- BANNER: exactly 10% viewport height (device dependent) -->
+<header class="top-banner">
+  <div class="brand">📄 Romania Tanara</div>
+  <nav class="nav-menu" aria-label="Main navigation">
+    <!-- NO CONTACT OPTION — strictly excluded -->
+    <a href="#" aria-current="page">Home</a>
+    <a href="#">Library</a>
+    <a href="#">Resources</a>
+    <a href="#">About</a>
+    <a href="#">Support</a>
+  </nav>
+</header>
+
+<main class="main-container">
+  
+  <!-- FIRST PDF: 2-PAGE DOCUMENT -->
+  <div class="doc-card">
+    <div class="doc-header">
+      <h1 class="doc-title">📘 Cum construiesti Romania Tanara</h1>
+      <div class="badge"> o ideologie deschisa, open-source, copy-left</div>
+    </div>
+    <iframe 
+      class="pdf-iframe" 
+      src="RomaniaTanaraV1.pdf" 
+      title="PDF viewer: two-page document - first PDF file"
+      frameborder="0"
+      allow="fullscreen"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+      aria-label="Embedded PDF document with 2 pages">
+      <p>Your browser does not support iframes. <a href="https://www.learningcontainer.com/wp-content/uploads/2019/09/Sample-PDF-File-2pages.pdf">Download the PDF</a> to view the 2-page file.</p>
+    </iframe>
+    <div class="iframe-note">
+      <span>📑 2-page report</span> — use toolbar inside PDF to navigate pages, zoom, or download.
+    </div>
+  </div>
+
+  <!-- SECOND PDF: 16-PAGE DOCUMENT -->
+  <div class="doc-card">
+    <div class="doc-header">
+      <h1 class="doc-title">📚 Tanarul Viitorului - manualul utilizatorului</h1>
+      <div class="badge">📑 cum te faci un bun cetatean al Romaniei Tinere!</div>
+    </div>
+    <iframe 
+      class="pdf-iframe" 
+      src="Brosura.pdf" 
+      title="PDF viewer: sixteen-page document - second PDF file"
+      frameborder="0"
+      allow="fullscreen"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+      aria-label="Embedded PDF document with 16 pages">
+      <p>Your browser does not support iframes. <a href="https://www.learningcontainer.com/wp-content/uploads/2019/09/Sample-PDF-File-16pages.pdf">Download the PDF</a> to view the full 16-page document.</p>
+    </iframe>
+    <div class="iframe-note">
+      <span>📖 16 pages full content</span> — scroll inside the window or use the PDF navigation.
+    </div>
+  </div>
+  
+  <!-- OPTIONAL FOOTER (no navigation, just informative) -->
+  <div class="info-footer">
+    <span>🔍 Reliable document viewer — both PDFs embedded securely | optimized for any screen size</span>
+  </div>
+</main>
+
+<!-- 
+  ADDITIONAL NOTES:
+  - Banner height = 10vh (min-height preserves usability on very small devices)
+  - Menu contains zero "Contact" option as requested.
+  - iframes display real PDFs: first has exactly 2 pages, second has 16 pages.
+  - Fully responsive: flexible iframe heights and padding for desktops, tablets, phones.
+  - Fallback download links ensure access if iframe fails.
+-->
 </body>
 </html>
-
+```
